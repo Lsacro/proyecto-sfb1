@@ -4,8 +4,8 @@ const App = () => {
   return (
     <>
       <Routes>
-        <Route path="/login" element={<LoginForm />} />
-        <Route path="/" element={() => <div>Home</div>} />{" "}
+        <Route path="/" element={<LoginForm />} />
+        <Route path="/home" element={() => <div>Home</div>} />{" "}
         {/* Define tu componente Home */}
       </Routes>
     </>
