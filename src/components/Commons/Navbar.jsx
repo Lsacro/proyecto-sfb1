@@ -20,7 +20,7 @@ function Navbar({ name }) {
         <Link className=" hover:text-beige hover:underline" to="/my-profile">
           My Profile
         </Link>
-        <p className="p-4 border-2 border-beige rounded-full flex gap-4 bg-beige">
+        <p className="p-4 border-2 border-beige rounded-full flex gap-4 bg-beige text-white">
           {name}{" "}
           <img
             className="w-6"
