@@ -1,4 +1,4 @@
-import { useState } from "react"; // import useState from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../Logo.png";
 
@@ -29,9 +29,11 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="container">
+    <div className="border border-black shadow-xl p-4 max-w-md mx-auto mt-10 bg-white">
       <img src={logo} alt="Logo" className="logo" />
-      <h2>Login</h2>
+      <h2 className="text-center font-bold" style={{ fontSize: "30px" }}>
+        Login
+      </h2>
       <form id="loginForm" onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="email">E-mail:</label>
@@ -42,6 +44,7 @@ const LoginForm = () => {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
         <div className="form-group">
@@ -53,6 +56,7 @@ const LoginForm = () => {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
         <button type="submit">Login</button>
