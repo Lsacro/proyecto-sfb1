@@ -3,6 +3,9 @@ import FavouritesPage from "./pages/FavouritesPage";
 import HomePage from "./pages/HomePage";
 import MyFlatsPage from "./pages/MyFlatsPage";
 import ProfilePage from "./pages/ProfilePage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+
 const App = () => {
   return (
     <>
@@ -11,6 +14,8 @@ const App = () => {
         <Route path="/favourites" element={<FavouritesPage />} />
         <Route path="my-flats" element={<MyFlatsPage />} />
         <Route path="my-profile" element={<ProfilePage />} />
+        <Route path="login" element={<LoginPage />} />
+        <Route path="register" element={<RegisterPage />} />
       </Routes>
     </>
   );
