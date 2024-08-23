@@ -29,14 +29,14 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="border border-black shadow-xl p-4 max-w-md mx-auto mt-10 bg-white">
-      <img src={logo} alt="Logo" className="logo" />
-      <h2 className="text-center font-bold" style={{ fontSize: "30px" }}>
-        Login
-      </h2>
-      <form id="loginForm" onSubmit={handleSubmit}>
+    <div className="border border-black shadow-xl p-4 max-w-md mx-auto mt-10 bg-white rounded-lg">
+      <img src={logo} alt="Logo" className="w-60 mx-auto mb-10" />
+      <h2 className="text-center font-bold text-2xl mb-4">Login</h2>
+      <form id="loginForm" onSubmit={handleSubmit} className="space-y-4">
         <div className="form-group">
-          <label htmlFor="email">E-mail:</label>
+          <label htmlFor="email" className="block font-semibold text-center">
+            E-mail:
+          </label>
           <input
             type="email"
             id="email"
@@ -44,11 +44,13 @@ const LoginForm = () => {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="mx-auto flex justify-center w-fit px-4 py-2 border border-gray-300 shadow-md rounded-md focus:outline-none focus:ring-2 focus:ring-beige"
           />
         </div>
         <div className="form-group">
-          <label htmlFor="password">Password:</label>
+          <label htmlFor="password" className="block font-semibold text-center">
+            Password:
+          </label>
           <input
             type="password"
             id="password"
@@ -56,12 +58,21 @@ const LoginForm = () => {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="mx-auto flex justify-center w-fit px-4 py-2 border border-gray-300 shadow-md rounded-md focus:outline-none focus:ring-2 focus:ring-beige"
           />
         </div>
-        <button type="submit">Login</button>
+        <button
+          type="submit"
+          className="p-4 border-2 border-beige rounded-lg mx-auto flex justify-center bg-beige text-white w-40"
+        >
+          Login
+        </button>
       </form>
-      <button id="registerButton" onClick={handleRegister}>
+      <button
+        id="registerButton"
+        onClick={handleRegister}
+        className="mt-2 p-4 border-2 border-beige rounded-lg mx-auto flex justify-center bg-beige text-white w-40"
+      >
         Register
       </button>
     </div>
