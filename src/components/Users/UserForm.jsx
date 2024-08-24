@@ -1,9 +1,9 @@
 //Componente para registrar el usuario o para actualizar el perfil
-import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import logo from "../../Logo.png";
+import { createUser, getUsers } from "../../services/firebase";
 
 const UserForm = () => {
   const navigate = useNavigate();
@@ -55,13 +55,38 @@ const UserForm = () => {
       birthDate: "",
     },
     validationSchema,
-    onSubmit: (values) => {
-      // Guardamos los datos del usuario en localStorage
-      localStorage.setItem("user", JSON.stringify(values));
+
+    onSubmit: async (values) => {
+      const usersFirebase = await getUsers();
+      console.log(usersFirebase);
+      usersFirebase.map((user) => {
+        if (user.email === values.email) {
+          alert("El correo ya existe");
+          navigate("/login");
+        }
+      });
       alert("Registro exitoso");
       navigate("/login"); //Pal Login (pilas, poner al home cuando esté)
     },
   });
+
+  //Función para guardar los datos del usuario
+  /*   const handleCreateUser = async () => {
+    const usersFirebase = await getUsers();
+    console.log(usersFirebase);
+    usersFirebase.map((user) => {
+      if (user.email === formik.values.email) {
+        alert("El correo ya existe");
+        return;
+      }
+    });
+    createUser({
+      ...formik.values,
+      birthDate: new Date(formik.values.birthDate),
+    });
+    alert("Registro exitoso");
+    navigate("/login");
+  }; */
 
   return (
     <div className="border border-black shadow-xl p-4 max-w-md mx-auto mt-10 bg-white rounded-lg">
