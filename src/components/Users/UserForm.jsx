@@ -1,14 +1,12 @@
-//Componente para registrar el usuario o para actualizar el perfil
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import logo from "../../Logo.png";
 import { createUser, getUsers } from "../../services/firebase";
 
-const UserForm = () => {
+const UserForm = ({ isUpdate = false }) => {
   const navigate = useNavigate();
 
-  //Yup acolita para manejar el esquema de validación
   const validationSchema = Yup.object({
     email: Yup.string()
       .email("Correo electrónico inválido")
@@ -45,7 +43,6 @@ const UserForm = () => {
       }),
   });
 
-  //Con formik vacilamos el estdo y la validacion de usuario.
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -55,18 +52,11 @@ const UserForm = () => {
       birthDate: "",
     },
     validationSchema,
-
-    onSubmit: async (values) => {
-      const usersFirebase = await getUsers();
-      console.log(usersFirebase);
-      usersFirebase.map((user) => {
-        if (user.email === values.email) {
-          alert("El correo ya existe");
-          navigate("/login");
-        }
-      });
-      alert("Registro exitoso");
-      navigate("/login"); //Pal Login (pilas, poner al home cuando esté)
+    onSubmit: (values) => {
+      //Se guardan o actualizan los datos del usuario en localStorage, conectele a la base parfavar
+      localStorage.setItem("user", JSON.stringify(values));
+      alert(isUpdate ? "Perfil actualizado exitosamente" : "Registro exitoso");
+      navigate(isUpdate ? "/profile" : "/login");
     },
   });
 
@@ -91,7 +81,9 @@ const UserForm = () => {
   return (
     <div className="border border-black shadow-xl p-4 max-w-md mx-auto mt-10 bg-white rounded-lg">
       <img src={logo} alt="Logo" className="w-60 mx-auto mb-10" />
-      <h2 className="text-center font-bold text-2xl mb-4">Register</h2>
+      <h2 className="text-center font-bold text-2xl mb-4">
+        {isUpdate ? "Actualizar Perfil" : "Register"}
+      </h2>
       <form onSubmit={formik.handleSubmit} className="space-y-4">
         <div className="form-group text-center">
           <label htmlFor="email" className="block font-semibold">
@@ -187,7 +179,7 @@ const UserForm = () => {
           type="submit"
           className="mt-4 p-4 border-2 border-beige rounded-lg mx-auto flex justify-center bg-beige text-white w-40"
         >
-          Register
+          {isUpdate ? "Actualizar" : "Register"}
         </button>
       </form>
     </div>
