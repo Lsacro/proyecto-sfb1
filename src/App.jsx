@@ -9,6 +9,7 @@ import UpdateProfilePage from "./pages/UpdateProfilePage";
 import PrivateRoute from "./components/Commons/PrivateRoute";
 import NewFlatPage from "./pages/NewFlatPage";
 import EditFlatPage from "./pages/EditFlatPage";
+import FlatDetailsPage from "./pages/FlatDetailsPage";
 
 const App = () => {
   return (
@@ -24,6 +25,8 @@ const App = () => {
           <Route path="UpdateProfilePage" element={<UpdateProfilePage />} />
           <Route path="newflat" element={<NewFlatPage />} />
           <Route path="editflat" element={<EditFlatPage />} />
+          <Route path="flatdetails" element={<FlatDetailsPage />} />
+          <Route path="/edit-flat/:id" element={<EditFlatPage />} />
         </Route>
       </Routes>
     </>
