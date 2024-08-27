@@ -27,7 +27,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="border border-black shadow-xl p-4 max-w-md mx-auto mt-10 bg-white rounded-lg">
+    <div className="border border-black drop-shadow-xl p-4 max-w-md mx-auto mt-10 bg-white rounded-lg">
       <img src={logo} alt="Logo" className="w-60 mx-auto mb-10" />
       <h2 className="text-center font-bold text-2xl mb-4">Login</h2>
       <form id="loginForm" onSubmit={handleSubmit} className="space-y-4">

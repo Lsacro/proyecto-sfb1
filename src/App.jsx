@@ -7,6 +7,8 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import UpdateProfilePage from "./pages/UpdateProfilePage";
 import PrivateRoute from "./components/Commons/PrivateRoute";
+import NewFlatPage from "./pages/NewFlatPage";
+import EditFlatPage from "./pages/EditFlatPage";
 
 const App = () => {
   return (
@@ -20,6 +22,8 @@ const App = () => {
           <Route path="my-flats" element={<MyFlatsPage />} />
           <Route path="my-profile" element={<ProfilePage />} />
           <Route path="UpdateProfilePage" element={<UpdateProfilePage />} />
+          <Route path="newflat" element={<NewFlatPage />} />
+          <Route path="editflat" element={<EditFlatPage />} />
         </Route>
       </Routes>
     </>
