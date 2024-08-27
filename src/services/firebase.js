@@ -53,3 +53,21 @@ export const getUserById = async (id) => {
 export const deleteUser = async (id) => {
   await deleteDoc(doc(db, collectionName, id));
 };
+
+//Vamos a definir la función para validar usuarios registrados
+const usersFirebase = await getUsers();
+export const valdiateEmail = (email) => {
+  const user = usersFirebase.find((user) => user.email === email);
+  return user;
+};
+
+//Vamos a definir la función para validar el Login
+
+export const validateLogin = (email, password) => {
+  const user = usersFirebase.find((user) => user.email === email);
+  if (user && user.password === password) {
+    return true;
+  } else {
+    return false;
+  }
+};

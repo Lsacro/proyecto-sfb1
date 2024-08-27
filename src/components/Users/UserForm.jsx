@@ -2,14 +2,19 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import logo from "../../Logo.png";
+import { createUser, valdiateEmail } from "../../services/firebase";
 
 const UserForm = ({ isUpdate = false }) => {
-  const navigate = useNavigate();
+  const history = useNavigate();
 
   const validationSchema = Yup.object({
     email: Yup.string()
       .email("Correo electrónico inválido")
-      .required("Campo obligatorio"),
+      .required("Campo obligatorio")
+      .test("mail", "Correo electrónico ya registrado", (value) => {
+        const emailToLowerCase = value.toLowerCase();
+        return valdiateEmail(emailToLowerCase) === undefined;
+      }),
     password: Yup.string()
       .required("Campo obligatorio")
       .min(6, "La contraseña debe tener al menos 6 caracteres")
@@ -52,10 +57,13 @@ const UserForm = ({ isUpdate = false }) => {
     },
     validationSchema,
     onSubmit: (values) => {
-      //Se guardan o actualizan los datos del usuario en localStorage, conectele a la base parfavar
-      localStorage.setItem("user", JSON.stringify(values));
+      createUser({
+        ...values,
+        birthDate: new Date(values.birthDate),
+        email: values.email.toLowerCase(),
+      });
       alert(isUpdate ? "Perfil actualizado exitosamente" : "Registro exitoso");
-      navigate(isUpdate ? "/profile" : "/login");
+      history(isUpdate ? "/profile" : "/login");
     },
   });
 
