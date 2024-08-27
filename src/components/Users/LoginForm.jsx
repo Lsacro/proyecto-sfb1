@@ -1,31 +1,29 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../Logo.png";
+import AuthContext from "../../contexts/authContext";
+import { validateLogin } from "../../services/firebase";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login } = useContext(AuthContext);
   const history = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const user = {
+      email,
+      password,
+    };
 
-    if (
-      storedUser &&
-      storedUser.email === email &&
-      storedUser.password === password
-    ) {
-      alert("Login exitoso");
-      history.push("/HomePage"); // Aqui va link a home
+    if (validateLogin(email.toLocaleLowerCase(), password)) {
+      login(user.email);
+      history("/");
     } else {
-      alert("Correo electrónico o contraseña incorrectos");
+      alert("Email o contraseña incorrectos");
     }
-  };
-
-  const handleRegister = () => {
-    history.push("/register");
   };
 
   return (
@@ -70,8 +68,8 @@ const LoginForm = () => {
       </form>
       <button
         id="registerButton"
-        onClick={handleRegister}
         className="mt-2 p-4 border-2 border-beige rounded-lg mx-auto flex justify-center bg-beige text-white w-40"
+        onClick={() => history("/register")}
       >
         Register
       </button>

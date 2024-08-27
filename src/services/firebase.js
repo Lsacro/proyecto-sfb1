@@ -60,3 +60,14 @@ export const valdiateEmail = (email) => {
   const user = usersFirebase.find((user) => user.email === email);
   return user;
 };
+
+//Vamos a definir la función para validar el Login
+
+export const validateLogin = (email, password) => {
+  const user = usersFirebase.find((user) => user.email === email);
+  if (user && user.password === password) {
+    return true;
+  } else {
+    return false;
+  }
+};

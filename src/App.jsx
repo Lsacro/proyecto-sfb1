@@ -6,18 +6,21 @@ import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import UpdateProfilePage from "./pages/UpdateProfilePage";
+import PrivateRoute from "./components/Commons/PrivateRoute";
 
 const App = () => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/favourites" element={<FavouritesPage />} />
-        <Route path="my-flats" element={<MyFlatsPage />} />
-        <Route path="my-profile" element={<ProfilePage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
-        <Route path="UpdateProfilePage" element={<UpdateProfilePage />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/favourites" element={<FavouritesPage />} />
+          <Route path="my-flats" element={<MyFlatsPage />} />
+          <Route path="my-profile" element={<ProfilePage />} />
+          <Route path="UpdateProfilePage" element={<UpdateProfilePage />} />
+        </Route>
       </Routes>
     </>
   );

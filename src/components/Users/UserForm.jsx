@@ -5,7 +5,7 @@ import logo from "../../Logo.png";
 import { createUser, valdiateEmail } from "../../services/firebase";
 
 const UserForm = ({ isUpdate = false }) => {
-  const navigate = useNavigate();
+  const history = useNavigate();
 
   const validationSchema = Yup.object({
     email: Yup.string()
@@ -63,7 +63,7 @@ const UserForm = ({ isUpdate = false }) => {
         email: values.email.toLowerCase(),
       });
       alert(isUpdate ? "Perfil actualizado exitosamente" : "Registro exitoso");
-      navigate(isUpdate ? "/profile" : "/login");
+      history(isUpdate ? "/profile" : "/login");
     },
   });
 
