@@ -6,6 +6,8 @@ import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import UpdateProfilePage from "./pages/UpdateProfilePage";
+import NewFlatPage from "./pages/NewFlatPage";
+import EditFlatPage from "./pages/EditFlatPage";
 
 const App = () => {
   return (
@@ -18,6 +20,8 @@ const App = () => {
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
         <Route path="UpdateProfilePage" element={<UpdateProfilePage />} />
+        <Route path="newflat" element={<NewFlatPage />} />
+        <Route path="editflat" element={<EditFlatPage />} />
       </Routes>
     </>
   );
