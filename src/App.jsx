@@ -10,6 +10,7 @@ import PrivateRoute from "./components/Commons/PrivateRoute";
 import NewFlatPage from "./pages/NewFlatPage";
 import EditFlatPage from "./pages/EditFlatPage";
 import FlatDetailsPage from "./pages/FlatDetailsPage";
+import MessageList from "./components/Messages/MessageList";
 
 const App = () => {
   return (
@@ -27,6 +28,8 @@ const App = () => {
           <Route path="editflat" element={<EditFlatPage />} />
           <Route path="flatdetails" element={<FlatDetailsPage />} />
           <Route path="/edit-flat/:id" element={<EditFlatPage />} />
+          <Route path="flat-details/:id" element={<FlatDetailsPage />} />{" "}
+          {/* Ruta para ver detalles del flat */}
         </Route>
       </Routes>
     </>
