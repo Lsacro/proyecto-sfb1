@@ -5,7 +5,7 @@ import FlatList from "../components/Flats/FlatList";
 function HomePage() {
   return (
     <>
-      <Navbar name="Bienvenido Carlos" />
+      <Navbar />
       <FlatList />
     </>
   );

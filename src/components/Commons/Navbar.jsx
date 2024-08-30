@@ -6,7 +6,7 @@ import Logo from "../../Logo.png";
 import { getToken } from "../../services/authService";
 import { findNameByEmail } from "../../services/firebase";
 
-function Navbar({ name, onDeleteProfile }) {
+function Navbar({ onDeleteProfile }) {
   const token = getToken();
   const tokenFirstName = findNameByEmail(token);
 
@@ -34,7 +34,7 @@ function Navbar({ name, onDeleteProfile }) {
             src="https://cdn-icons-png.flaticon.com/512/56/56763.png"
             alt="menu"
           />
-          {name}
+          {tokenFirstName.firstName}
           <img
             className="w-6"
             src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
