@@ -17,9 +17,13 @@ import { db } from "../config/firebase";
 
 const collectionName = "users";
 
+const collectionNameFlats = "flats";
+
 //Vamos a definir la referencia a la coleción que vamos a utilizar
 
 const usersCollectionRef = collection(db, collectionName);
+
+const flatsCollectionRef = collection(db, collectionNameFlats);
 
 //Vamos a definir la función de lectura de datos
 
@@ -29,7 +33,17 @@ export const getUsers = async () => {
   return users;
 };
 
-//Vamos a definir la función de creación de datos
+//! Vamos a definir la función de lectura de flats
+
+const getFlats = async () => {
+  const data = await getDocs(flatsCollectionRef);
+  const flats = data.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  return flats;
+};
+
+export const flatsArray = await getFlats();
+
+//Vamos a definir la función de creación de usuarios
 export const createUser = async (user) => {
   await addDoc(usersCollectionRef, user);
 };
@@ -70,4 +84,17 @@ export const validateLogin = (email, password) => {
   } else {
     return false;
   }
+};
+
+//Vamos a definir la fucnión para crear un flat
+
+export const createFlat = async (flat) => {
+  await addDoc(flatsCollectionRef, flat);
+};
+
+//Vamos a buscar First Name por Email
+
+export const findNameByEmail = (emailInput) => {
+  const user = usersFirebase.find(({ email }) => email === emailInput);
+  return user;
 };

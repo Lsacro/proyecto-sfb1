@@ -2,15 +2,17 @@
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { createFlat } from "../../services/firebase";
+import { getToken } from "../../services/authService";
+import { useNavigate } from "react-router-dom";
 
-const FlatForm = ({ initialValues, onSubmit, buttonText }) => {
+const FlatForm = ({ initialValues, buttonText }) => {
+  const history = useNavigate();
   // Yup acolita a estucturar el esquema de validción
   const validationSchema = Yup.object({
     city: Yup.string().required("Campo obligatorio"),
     address: Yup.string().required("Campo obligatorio"),
-    number: Yup.number()
-      .typeError("Debe ser número")
-      .required("Campo obligatorio"),
+    number: Yup.string().required("Campo obligatorio"),
     size: Yup.number()
       .typeError("Debe ser número")
       .required("Campo obligatorio"),
@@ -35,10 +37,17 @@ const FlatForm = ({ initialValues, onSubmit, buttonText }) => {
       yearBuilt: "",
       value: "",
       availableFrom: "",
+      userId: "",
     },
     validationSchema,
     onSubmit: (values) => {
-      onSubmit(values);
+      createFlat({
+        ...values,
+        availableFrom: new Date(values.availableFrom),
+        userId: getToken(),
+      });
+      alert("Flat creado");
+      history("/");
     },
   });
 
@@ -89,7 +98,7 @@ const FlatForm = ({ initialValues, onSubmit, buttonText }) => {
             Numeración:
           </label>
           <input
-            type="number"
+            type="text"
             id="number"
             name="number"
             value={formik.values.number}

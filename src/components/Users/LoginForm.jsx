@@ -15,7 +15,6 @@ const LoginForm = () => {
 
     const user = {
       email,
-      password,
     };
 
     if (validateLogin(email.toLocaleLowerCase(), password)) {
