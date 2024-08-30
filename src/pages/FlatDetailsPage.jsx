@@ -48,7 +48,7 @@ const FlatDetailsPage = () => {
 
   return (
     <div>
-      <Navbar name="Bienvenido Carlos" />
+      <Navbar name="Carlos Trujillo" />
       <FlatView flatData={flatData} isOwner={isOwner} />
       <MessageList
         flatId={flatData.id}

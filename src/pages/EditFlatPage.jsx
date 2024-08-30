@@ -22,7 +22,7 @@ const EditFlatPage = () => {
 
   return (
     <div>
-      <Navbar name="Bienvenido Charles" />
+      <Navbar name="Charles" />
       <FlatForm
         initialValues={flatData}
         onSubmit={handleUpdateFlat}
