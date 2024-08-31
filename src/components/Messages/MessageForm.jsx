@@ -1,26 +1,29 @@
 //Componente para enviar el mensaje
 
-import React, { useState } from "react";
+import { useState } from "react";
+import { getToken } from "../../services/authService";
+import { createMessage, findNameByEmail } from "../../services/firebase";
 
 const MessageForm = ({ isOpen, onClose, onSubmit }) => {
   const [message, setMessage] = useState("");
   // Obtener el nombre y correo desde localStorage (hasta enchufar a firebase)
-  const name = localStorage.getItem("userName");
-  const email = localStorage.getItem("userEmail");
 
   const handleSend = () => {
-    if (!message.trim() || !name.trim() || !email.trim()) {
+    if (!message.trim()) {
       alert("Todos los campos son obligatorios");
       return;
     }
+    const token = getToken();
 
     const newMessage = {
       id: Date.now(),
       timestamp: new Date().toLocaleString(),
-      name,
-      email,
+      name: findNameByEmail(token).firstName,
+      email: token,
       content: message,
     };
+
+    createMessage(newMessage);
 
     onSubmit(newMessage);
     setMessage("");

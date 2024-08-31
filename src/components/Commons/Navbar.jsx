@@ -1,10 +1,11 @@
 //Componente menu de navegacion para toda la app
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../Logo.png";
 import { getToken } from "../../services/authService";
 import { findNameByEmail } from "../../services/firebase";
+import AuthContext from "../../contexts/authContext";
 
 function Navbar({ onDeleteProfile }) {
   const token = getToken();
@@ -12,6 +13,15 @@ function Navbar({ onDeleteProfile }) {
 
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+
+  const { logout } = useContext(AuthContext);
+
+  const handleLogout = (event) => {
+    event.preventDefault();
+    logout();
+    setIsOpen(false);
+    navigate("/login");
+  };
 
   const handleDeleteProfile = () => {
     if (window.confirm("¿Borrar Perfil?")) {
@@ -92,7 +102,7 @@ function Navbar({ onDeleteProfile }) {
               <Link
                 className="hover:text-beige"
                 to="/login"
-                onClick={() => setIsOpen(false)}
+                onClick={handleLogout}
               >
                 LogOut
               </Link>

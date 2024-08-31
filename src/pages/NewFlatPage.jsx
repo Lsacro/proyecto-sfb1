@@ -9,7 +9,7 @@ const NewFlatPage = () => {
   };
   return (
     <div>
-      <Navbar name="Bienvenido Carlos" />
+      <Navbar />
       <FlatForm
         initialValues={{
           city: "",

@@ -1,6 +1,6 @@
 //Componente para mostrar el listado de mensajes
 
-import React, { useState } from "react";
+import { useState } from "react";
 import MessageForm from "./MessageForm";
 
 const MessageList = ({ flatId, userId, isOwner, existingMessages }) => {

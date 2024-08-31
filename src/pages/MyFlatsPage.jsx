@@ -2,7 +2,7 @@
 import Navbar from "../components/Commons/Navbar";
 
 function MyFlats() {
-  return <Navbar name={"Bienvenido Carlos"} />;
+  return <Navbar />;
 }
 
 export default MyFlats;

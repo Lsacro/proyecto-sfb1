@@ -2,7 +2,7 @@
 import Navbar from "../components/Commons/Navbar";
 
 function FavouritesPage() {
-  return <Navbar name={"Bienvenido Carlos"} />;
+  return <Navbar />;
 }
 
 export default FavouritesPage;

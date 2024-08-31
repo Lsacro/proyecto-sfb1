@@ -13,19 +13,23 @@ import {
 } from "firebase/firestore";
 import { db } from "../config/firebase";
 
-//Vamos a definir el nombre de la colección que vamos a utilizar de esa base de datos
+//* Vamos a definir el nombre de la colección que vamos a utilizar de esa base de datos
 
 const collectionName = "users";
 
 const collectionNameFlats = "flats";
 
-//Vamos a definir la referencia a la coleción que vamos a utilizar
+const collectionNameMessages = "messages";
+
+//* Vamos a definir la referencia a la coleción que vamos a utilizar
 
 const usersCollectionRef = collection(db, collectionName);
 
 const flatsCollectionRef = collection(db, collectionNameFlats);
 
-//Vamos a definir la función de lectura de datos
+const messagesCollectionRef = collection(db, collectionNameMessages);
+
+//* Vamos a definir la función de lectura de datos
 
 export const getUsers = async () => {
   const data = await getDocs(usersCollectionRef);
@@ -33,7 +37,7 @@ export const getUsers = async () => {
   return users;
 };
 
-//! Vamos a definir la función de lectura de flats
+//* Vamos a definir la función de lectura de flats
 
 const getFlats = async () => {
   const data = await getDocs(flatsCollectionRef);
@@ -43,12 +47,26 @@ const getFlats = async () => {
 
 export const flatsArray = await getFlats();
 
+//* Vamos a definir la función de creación de datos
+
 //Vamos a definir la función de creación de usuarios
 export const createUser = async (user) => {
   await addDoc(usersCollectionRef, user);
 };
 
-//Vamos a definir la función de actualización de datos
+//Vamos a definir la fucnión para crear un flat
+
+export const createFlat = async (flat) => {
+  await addDoc(flatsCollectionRef, flat);
+};
+
+//Vamos a definir la función para crear un mensaje
+
+export const createMessage = async (message) => {
+  await addDoc(messagesCollectionRef, message);
+};
+
+//* Vamos a definir la función de actualización de datos
 export const updateUser = async (id, updateUserData) => {
   const userRef = doc(db, collectionName, id);
   await updateDoc(userRef, updateUserData);
@@ -84,12 +102,6 @@ export const validateLogin = (email, password) => {
   } else {
     return false;
   }
-};
-
-//Vamos a definir la fucnión para crear un flat
-
-export const createFlat = async (flat) => {
-  await addDoc(flatsCollectionRef, flat);
 };
 
 //Vamos a buscar First Name por Email

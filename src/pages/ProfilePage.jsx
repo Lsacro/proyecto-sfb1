@@ -2,7 +2,7 @@
 import Navbar from "../components/Commons/Navbar";
 
 function ProfilePage() {
-  return <Navbar name={"Bienvenido Carlos"} />;
+  return <Navbar />;
 }
 
 export default ProfilePage;
