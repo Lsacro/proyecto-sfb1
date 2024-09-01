@@ -74,7 +74,7 @@ function Navbar({ onDeleteProfile }) {
             <li>
               <Link
                 className="hover:text-beige"
-                to="/my-profile"
+                to="/myprofile"
                 onClick={() => setIsOpen(false)}
               >
                 Mi Perfil
