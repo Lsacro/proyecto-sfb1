@@ -24,6 +24,12 @@ const UserForm = ({ isUpdate = false }) => {
         /[!@#$%^&*(),.?":{}|<>]/,
         "La contraseña debe contener un caracter especial"
       ),
+    confirmPassword: Yup.string().when("password", {
+      is: (val) => val && val.length > 0,
+      then: Yup.string()
+        .required("Campo obligatorio")
+        .oneOf([Yup.ref("password")], "Las contraseñas no coinciden"),
+    }),
     firstName: Yup.string()
       .min(2, "El nombre debe tener al menos 2 caracteres")
       .required("Campo obligatorio"),
@@ -51,6 +57,7 @@ const UserForm = ({ isUpdate = false }) => {
     initialValues: {
       email: "",
       password: "",
+      confirmPassword: "",
       firstName: "",
       lastName: "",
       birthDate: "",
@@ -109,6 +116,28 @@ const UserForm = ({ isUpdate = false }) => {
             <div className="text-red-500">{formik.errors.password}</div>
           ) : null}
         </div>
+
+        {isUpdate && (
+          <div className="form-group text-center">
+            <label htmlFor="confirmPassword" className="block font-semibold">
+              Confirmar Password:
+            </label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              value={formik.values.confirmPassword}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              className="w-fit px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-beige"
+            />
+            {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
+              <div className="text-red-500">
+                {formik.errors.confirmPassword}
+              </div>
+            ) : null}
+          </div>
+        )}
 
         <div className="form-group text-center">
           <label htmlFor="firstName" className="block font-semibold">
