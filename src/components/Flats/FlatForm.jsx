@@ -29,8 +29,8 @@ const FlatForm = ({ initialValues, buttonText }) => {
   // Formik vacila el manejo del formulario: notfica cuando algu campo esta con error.
   const formik = useFormik({
     initialValues: initialValues || {
-      Título: "",
-      Descripción: "",
+      title: "",
+      description: "",
       city: "",
       address: "",
       number: "",
@@ -59,6 +59,40 @@ const FlatForm = ({ initialValues, buttonText }) => {
         {buttonText === "Actualizar" ? "Edita tu Flat" : "Nuevo Flat"}
       </h2>
       <form onSubmit={formik.handleSubmit} className="space-y-4">
+        <div className="form-group text-center">
+          <label htmlFor="city" className="block font-semibold">
+            Tipo de Propiedad:
+          </label>
+          <input
+            type="text"
+            id="city"
+            name="city"
+            value={formik.values.city}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className="text-center w-fit px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-beige"
+          />
+          {formik.touched.city && formik.errors.city ? (
+            <div className="text-red-500">{formik.errors.city}</div>
+          ) : null}
+        </div>
+        <div className="form-group text-center">
+          <label htmlFor="city" className="block font-semibold">
+            Descripción:
+          </label>
+          <input
+            type="text"
+            id="city"
+            name="city"
+            value={formik.values.city}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className="text-center w-fit px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-beige"
+          />
+          {formik.touched.city && formik.errors.city ? (
+            <div className="text-red-500">{formik.errors.city}</div>
+          ) : null}
+        </div>
         <div className="form-group text-center">
           <label htmlFor="city" className="block font-semibold">
             Ciudad:
