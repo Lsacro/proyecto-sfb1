@@ -12,6 +12,8 @@ const NewFlatPage = () => {
       <Navbar />
       <FlatForm
         initialValues={{
+          Título: "",
+          Descripción: "",
           city: "",
           address: "",
           number: "",

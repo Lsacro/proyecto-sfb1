@@ -11,6 +11,7 @@ import NewFlatPage from "./pages/NewFlatPage";
 import EditFlatPage from "./pages/EditFlatPage";
 import FlatDetailsPage from "./pages/FlatDetailsPage";
 import MessageList from "./components/Messages/MessageList";
+import AllUsersPage from "./pages/AllUsersPage";
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
           <Route path="/edit-flat/:id" element={<EditFlatPage />} />
           <Route path="flat-details/:id" element={<FlatDetailsPage />} />{" "}
           {/* Ruta para ver detalles del flat */}
+          <Route path="allusers" element={<AllUsersPage />} />
         </Route>
       </Routes>
     </>

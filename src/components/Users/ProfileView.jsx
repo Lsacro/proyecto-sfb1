@@ -1,21 +1,22 @@
 //Componente para mostrar el perfil o datos del usuario
 
 import { useEffect, useState } from "react";
-import { getAuth } from "firebase/auth";
-import { getDatabase, ref, child, get } from "firebase/database";
+import { getToken } from "../../services/authService";
+import { ref, child, get } from "firebase/database";
 import { useNavigate } from "react-router-dom";
 import logo from "../../Logo.png";
+import { valdiateEmail } from "../../services/firebase";
 
 const ProfileView = () => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const auth = getAuth();
+  const auth = getToken();
   const user = auth.currentUser;
   const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
-      const dbRef = ref(getDatabase());
+      const dbRef = ref(valdiateEmail());
       get(child(dbRef, `users/${user.uid}`))
         .then((snapshot) => {
           if (snapshot.exists()) {

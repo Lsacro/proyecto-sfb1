@@ -29,6 +29,8 @@ const FlatForm = ({ initialValues, buttonText }) => {
   // Formik vacila el manejo del formulario: notfica cuando algu campo esta con error.
   const formik = useFormik({
     initialValues: initialValues || {
+      Título: "",
+      Descripción: "",
       city: "",
       address: "",
       number: "",

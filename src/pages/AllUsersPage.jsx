@@ -5,13 +5,13 @@ import Navbar from "../components/Commons/Navbar";
 import UserList from "../components/Users/UserList"; // Asegúrate de importar correctamente
 
 // Suponiendo que tienes una función para obtener los usuarios
-import { getAllUsers } from "../services/firebase";
+import { getUsers } from "../services/firebase";
 
 function AllUsersPage() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    getAllUsers().then((data) => setUsers(data));
+    getUsers().then((data) => setUsers(data));
   }, []);
 
   return (
