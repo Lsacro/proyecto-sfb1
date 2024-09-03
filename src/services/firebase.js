@@ -110,3 +110,14 @@ export const findNameByEmail = (emailInput) => {
   const user = usersFirebase.find(({ email }) => email === emailInput);
   return user;
 };
+
+//Vamos a la función para lectura de mensajes
+
+export const getMessages = async () => {
+  const data = await getDocs(messagesCollectionRef);
+  const messages = data.docs.map((doc) => ({
+    idFirebase: doc.id,
+    ...doc.data(),
+  }));
+  return messages;
+};
