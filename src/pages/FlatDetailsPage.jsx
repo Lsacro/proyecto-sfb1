@@ -6,10 +6,19 @@ import MessageList from "../components/Messages/MessageList";
 import image1 from "../images/image1.jpg";
 import image2 from "../images/image2.jpg";
 import image3 from "../images/image3.jpg";
+import { getToken } from "../services/authService";
+import { getMessages } from "../services/firebase";
+
+const messages = await getMessages();
+
+const handleIsOwner = (token, flatId) => {
+  if (token === flatId) return true;
+  else return false;
+};
 
 const FlatDetailsPage = () => {
   const flatData = {
-    id: 1,
+    id: "martin@gmail.com",
     title: "Apart-Studio en La Carolina",
     images: [image1, image2, image3],
     description:
@@ -25,30 +34,13 @@ const FlatDetailsPage = () => {
     isAvailable: true,
   };
 
-  const isOwner = false; // Cambiar según la lógica
+  const isOwner = handleIsOwner(getToken(), flatData.id); // Cambiar según la lógica
   const userId = 2; // Esto se obtiene del id del usuario
-  const existingMessages = [
-    {
-      id: 1,
-      userId: 123,
-      name: "Carlos Perez",
-      email: "carlos@example.com",
-      timestamp: "2024-08-28 10:30",
-      content: "¿Está disponible para una visita este fin de semana?",
-    },
-    {
-      id: 2,
-      userId: 1234,
-      name: "Juana Banana",
-      email: "JB@example.com",
-      timestamp: "2024-09-28 10:30",
-      content: "¿Holi 🍌 ?",
-    },
-  ]; //Obetenr estos mensajes de la base de datos
+  const existingMessages = messages; //Obetenr estos mensajes de la base de datos
 
   return (
     <div>
-      <Navbar name="Carlos Trujillo" />
+      <Navbar />
       <FlatView flatData={flatData} isOwner={isOwner} />
       <MessageList
         flatId={flatData.id}
