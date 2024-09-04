@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import Casa from "../../images/casa.png";
 
 function FlatItem({ id, city, size, availableFrom, address, value }) {
   return (
@@ -8,7 +7,11 @@ function FlatItem({ id, city, size, availableFrom, address, value }) {
         className="shadow-md shadow-beige p-4 rounded-lg bg-white mt-6 hover:shadow-lg transition-shadow duration-300"
         key={id}
       >
-        <img className="w-52 rounded-lg" src={Casa} alt="casa" />
+        <img
+          className="w-52 rounded-lg"
+          src={`/images/Casa/${Math.floor(Math.random() * 20)}.jpg`}
+          alt="casa"
+        />
         <p className="text-xl mt-4">{city}</p>
         <p className=" mt-1">{size} m²</p>
         <p className="mt-1">{availableFrom ? "Disponible" : "No disponible"}</p>
