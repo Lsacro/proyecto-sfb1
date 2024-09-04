@@ -2,8 +2,20 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import logo from "../../Logo.png";
-import { createUser, valdiateEmail } from "../../services/firebase";
+import { createUser, updateUser, valdiateEmail } from "../../services/firebase";
+import { getToken } from "../../services/authService";
 
+console.log(valdiateEmail("carlos@gmail.com"));
+
+const handleUpdate = async (values) => {
+  const user = valdiateEmail(getToken());
+  await updateUser(user.id, {
+    password: values.password,
+    firstName: values.firstName,
+    lastName: values.lastName,
+    birthDate: new Date(values.birthDate),
+  });
+};
 const UserForm = ({ isUpdate = false }) => {
   const navigate = useNavigate();
 
@@ -24,12 +36,6 @@ const UserForm = ({ isUpdate = false }) => {
         /[!@#$%^&*(),.?":{}|<>]/,
         "La contraseña debe contener un caracter especial"
       ),
-    confirmPassword: Yup.string().when("password", {
-      is: (val) => val && val.length > 0,
-      then: Yup.string()
-        .required("Campo obligatorio")
-        .oneOf([Yup.ref("password")], "Las contraseñas no coinciden"),
-    }),
     firstName: Yup.string()
       .min(2, "El nombre debe tener al menos 2 caracteres")
       .required("Campo obligatorio"),
@@ -55,22 +61,28 @@ const UserForm = ({ isUpdate = false }) => {
 
   const formik = useFormik({
     initialValues: {
-      email: "",
+      email: "marioBros@gmail.com",
       password: "",
-      confirmPassword: "",
       firstName: "",
       lastName: "",
       birthDate: "",
     },
     validationSchema,
     onSubmit: (values) => {
-      createUser({
-        ...values,
-        birthDate: new Date(values.birthDate),
-        email: values.email.toLowerCase(),
-      });
-      alert(isUpdate ? "Perfil actualizado exitosamente" : "Registro exitoso");
-      navigate(isUpdate ? "/profile" : "/login");
+      console.log("Entro en el loop de formik");
+      if (isUpdate) {
+        handleUpdate(values);
+      } else {
+        createUser({
+          ...values,
+          birthDate: new Date(values.birthDate),
+          email: values.email.toLowerCase(),
+        });
+        alert(
+          isUpdate ? "Perfil actualizado exitosamente" : "Registro exitoso"
+        );
+        navigate(isUpdate ? "/profile" : "/login");
+      }
     },
   });
 
@@ -81,23 +93,26 @@ const UserForm = ({ isUpdate = false }) => {
         {isUpdate ? "Actualizar Perfil" : "Register"}
       </h2>
       <form onSubmit={formik.handleSubmit} className="space-y-4">
-        <div className="form-group text-center">
-          <label htmlFor="email" className="block font-semibold">
-            E-mail:
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            className="text-center w-fit px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-beige"
-          />
-          {formik.touched.email && formik.errors.email ? (
-            <div className="text-red-500">{formik.errors.email}</div>
-          ) : null}
-        </div>
+        {isUpdate && (
+          <div className="form-group text-center">
+            <label htmlFor="email" className="block font-semibold">
+              E-mail:
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              className="text-center w-fit px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-beige"
+              disabled
+            />
+            {formik.touched.email && formik.errors.email ? (
+              <div className="text-red-500">{formik.errors.email}</div>
+            ) : null}
+          </div>
+        )}
 
         <div className="form-group text-center">
           <label htmlFor="password" className="block font-semibold">
@@ -116,28 +131,6 @@ const UserForm = ({ isUpdate = false }) => {
             <div className="text-red-500">{formik.errors.password}</div>
           ) : null}
         </div>
-
-        {isUpdate && (
-          <div className="form-group text-center">
-            <label htmlFor="confirmPassword" className="block font-semibold">
-              Confirmar Password:
-            </label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={formik.values.confirmPassword}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              className="w-fit px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-beige"
-            />
-            {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
-              <div className="text-red-500">
-                {formik.errors.confirmPassword}
-              </div>
-            ) : null}
-          </div>
-        )}
 
         <div className="form-group text-center">
           <label htmlFor="firstName" className="block font-semibold">

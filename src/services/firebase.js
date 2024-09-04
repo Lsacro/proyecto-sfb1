@@ -67,6 +67,7 @@ export const createMessage = async (message) => {
 };
 
 //* Vamos a definir la función de actualización de datos
+//Función para actualizar usuarios
 export const updateUser = async (id, updateUserData) => {
   const userRef = doc(db, collectionName, id);
   await updateDoc(userRef, updateUserData);
