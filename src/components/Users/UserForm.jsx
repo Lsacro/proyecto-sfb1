@@ -16,7 +16,12 @@ const handleUpdate = async (values) => {
     birthDate: new Date(values.birthDate),
   });
 };
-const UserForm = ({ isUpdate = false }) => {
+const UserForm = ({
+  isUpdate = false,
+  email = false,
+  firstName = false,
+  lastName = false,
+}) => {
   const navigate = useNavigate();
 
   const validationSchema = Yup.object({
@@ -61,10 +66,10 @@ const UserForm = ({ isUpdate = false }) => {
 
   const formik = useFormik({
     initialValues: {
-      email: "marioBros@gmail.com",
+      email: isUpdate ? email : "",
       password: "",
-      firstName: "",
-      lastName: "",
+      firstName: isUpdate ? firstName : "",
+      lastName: isUpdate ? lastName : "",
       birthDate: "",
     },
     validationSchema,
@@ -93,26 +98,24 @@ const UserForm = ({ isUpdate = false }) => {
         {isUpdate ? "Actualizar Perfil" : "Register"}
       </h2>
       <form onSubmit={formik.handleSubmit} className="space-y-4">
-        {isUpdate && (
-          <div className="form-group text-center">
-            <label htmlFor="email" className="block font-semibold">
-              E-mail:
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formik.values.email}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              className="text-center w-fit px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-beige"
-              disabled
-            />
-            {formik.touched.email && formik.errors.email ? (
-              <div className="text-red-500">{formik.errors.email}</div>
-            ) : null}
-          </div>
-        )}
+        <div className="form-group text-center">
+          <label htmlFor="email" className="block font-semibold">
+            E-mail:
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className="text-center w-fit px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-beige"
+            disabled={isUpdate}
+          />
+          {formik.touched.email && formik.errors.email ? (
+            <div className="text-red-500">{formik.errors.email}</div>
+          ) : null}
+        </div>
 
         <div className="form-group text-center">
           <label htmlFor="password" className="block font-semibold">
