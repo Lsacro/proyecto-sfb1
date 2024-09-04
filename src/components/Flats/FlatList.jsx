@@ -1,6 +1,6 @@
 //Componente para listar los flats
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getFlats } from "../../services/firebase";
 import { getToken } from "../../services/authService";
 import fondoHome from "../../images/fondoHome.png";

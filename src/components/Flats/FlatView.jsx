@@ -1,6 +1,5 @@
 //Componente para ver los detalles del flat
 
-import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const FlatView = ({ flatData, isOwner }) => {

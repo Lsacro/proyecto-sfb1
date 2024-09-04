@@ -1,6 +1,6 @@
 //Pagina para mostrar todo los usuarios registrados (solo la puede ver el admin)
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../components/Commons/Navbar";
 import UserList from "../components/Users/UserList";
 import UserForm from "../components/Users/UserForm";
