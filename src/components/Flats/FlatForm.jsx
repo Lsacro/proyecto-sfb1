@@ -2,14 +2,16 @@
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { createFlat } from "../../services/firebase";
+import { createFlat, updateFlat } from "../../services/firebase";
 import { getToken } from "../../services/authService";
 import { useNavigate } from "react-router-dom";
 
-const FlatForm = ({ initialValues, buttonText }) => {
-  const history = useNavigate();
-  // Yup acolita a estucturar el esquema de validción
+const FlatForm = ({ initialValues, buttonText, onSubmit }) => {
+  const navigate = useNavigate();
+
   const validationSchema = Yup.object({
+    title: Yup.string().required("Campo obligatorio"),
+    description: Yup.string().required("Campo obligatorio"),
     city: Yup.string().required("Campo obligatorio"),
     address: Yup.string().required("Campo obligatorio"),
     number: Yup.string().required("Campo obligatorio"),
@@ -26,7 +28,6 @@ const FlatForm = ({ initialValues, buttonText }) => {
     availableFrom: Yup.date().required("Campo obligatorio"),
   });
 
-  // Formik vacila el manejo del formulario: notfica cuando algu campo esta con error.
   const formik = useFormik({
     initialValues: initialValues || {
       title: "",
@@ -39,17 +40,23 @@ const FlatForm = ({ initialValues, buttonText }) => {
       yearBuilt: "",
       value: "",
       availableFrom: "",
-      userId: "",
+      userId: getToken(),
     },
     validationSchema,
-    onSubmit: (values) => {
-      createFlat({
+    onSubmit: async (values) => {
+      const flatData = {
         ...values,
         availableFrom: new Date(values.availableFrom),
         userId: getToken(),
-      });
-      alert("Flat creado");
-      history("/");
+      };
+
+      if (onSubmit) {
+        await onSubmit(flatData);
+      } else {
+        await createFlat(flatData);
+        alert("Flat creado");
+        navigate("/");
+      }
     },
   });
 
@@ -60,39 +67,40 @@ const FlatForm = ({ initialValues, buttonText }) => {
       </h2>
       <form onSubmit={formik.handleSubmit} className="space-y-4">
         <div className="form-group text-center">
-          <label htmlFor="city" className="block font-semibold">
-            Tipo de Propiedad:
+          <label htmlFor="title" className="block font-semibold">
+            Título:
           </label>
           <input
             type="text"
-            id="city"
-            name="city"
-            value={formik.values.city}
+            id="title"
+            name="title"
+            value={formik.values.title}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             className="text-center w-fit px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-beige"
           />
-          {formik.touched.city && formik.errors.city ? (
-            <div className="text-red-500">{formik.errors.city}</div>
+          {formik.touched.title && formik.errors.title ? (
+            <div className="text-red-500">{formik.errors.title}</div>
           ) : null}
         </div>
+
         <div className="form-group text-center">
-          <label htmlFor="city" className="block font-semibold">
+          <label htmlFor="description" className="block font-semibold">
             Descripción:
           </label>
-          <input
-            type="text"
-            id="city"
-            name="city"
-            value={formik.values.city}
+          <textarea
+            id="description"
+            name="description"
+            value={formik.values.description}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className="text-center w-fit px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-beige"
+            className="text-center w-90% px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-beige"
           />
-          {formik.touched.city && formik.errors.city ? (
-            <div className="text-red-500">{formik.errors.city}</div>
+          {formik.touched.description && formik.errors.description ? (
+            <div className="text-red-500">{formik.errors.description}</div>
           ) : null}
         </div>
+
         <div className="form-group text-center">
           <label htmlFor="city" className="block font-semibold">
             Ciudad:

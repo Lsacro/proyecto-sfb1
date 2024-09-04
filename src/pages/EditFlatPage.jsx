@@ -1,28 +1,54 @@
 //Pagina para editar la informacion del flat
 
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "../components/Commons/Navbar";
 import FlatForm from "../components/Flats/FlatForm";
+import { getFlats, updateFlat } from "../services/firebase";
 
 const EditFlatPage = () => {
-  const flatData = {
-    city: "Cambia la cuidad",
-    address: "Cambia la dirección",
-    number: 55,
-    size: 85,
-    hasAC: true,
-    yearBuilt: 2010,
-    value: 145000,
-    availableFrom: "2024-09-10",
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [flatData, setFlatData] = useState(null);
+
+  useEffect(() => {
+    const fetchFlat = async () => {
+      const flats = await getFlats();
+      const flat = flats.find((f) => f.id === id);
+      if (flat) {
+        setFlatData({
+          ...flat,
+          availableFrom: flat.availableFrom
+            .toDate()
+            .toISOString()
+            .split("T")[0],
+        });
+      } else {
+        console.error("Flat not found");
+        navigate("/");
+      }
+    };
+
+    fetchFlat();
+  }, [id, navigate]);
+
+  const handleUpdateFlat = async (values) => {
+    try {
+      await updateFlat(id, values);
+      console.log("Flat actualizado:", values);
+      navigate("/my-flats");
+    } catch (error) {
+      console.error("Error al actualizar el flat:", error);
+    }
   };
 
-  const handleUpdateFlat = (values) => {
-    // Aquí puedes manejar el envío del formulario para actualizar el flat
-    console.log("Flat actualizado:", values);
-  };
+  if (!flatData) {
+    return <div>Cargando...</div>;
+  }
 
   return (
     <div>
-      <Navbar name="Charles" />
+      <Navbar />
       <FlatForm
         initialValues={flatData}
         onSubmit={handleUpdateFlat}

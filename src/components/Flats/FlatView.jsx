@@ -1,56 +1,74 @@
 //Componente para ver los detalles del flat
 
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const FlatView = ({ flatData, isOwner }) => {
   const navigate = useNavigate();
 
+  const {
+    id = "",
+    title = "Sin título",
+    description = "Sin descripción",
+    city = "",
+    address = "",
+    number = "",
+    size = "",
+    hasAC = false,
+    yearBuilt = "",
+    value = "",
+    availableFrom = null,
+    userId = "",
+  } = flatData || {};
+
   const handleEdit = () => {
-    navigate(`/edit-flat/${flatData.id}`);
+    navigate(`/edit-flat/${id}`);
+  };
+
+  const formatDate = (timestamp) => {
+    if (timestamp && timestamp.seconds) {
+      return new Date(timestamp.seconds * 1000).toLocaleDateString();
+    }
+    return "Fecha no disponible";
   };
 
   return (
     <div className="border-beige border-gray-300 shadow-lg p-6 max-w-4xl mx-auto mt-10 bg-white rounded-lg">
       <div className="flex flex-col items-center mb-6">
-        <h2 className="text-3xl font-bold mb-2">{flatData.title}</h2>
-        <div className="flex space-x-4">
-          {flatData.images.map((image, index) => (
-            <img
-              key={index}
-              src={image}
-              alt={`Flat image ${index + 1}`}
-              className="w-52 h-36 object-cover rounded-md"
-            />
-          ))}
-        </div>
+        <h2 className="text-3xl font-bold mb-2">{title || "Sin título"}</h2>
       </div>
 
-      <p className="text-lg text-center mb-4">{flatData.description}</p>
+      <p className="text-lg text-center mb-4">
+        {description || "Sin descripción"}
+      </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-center mb-6">
         <div>
-          <strong>Ciudad:</strong> {flatData.city}
+          <strong>Ciudad:</strong> {city}
         </div>
         <div>
-          <strong>Dirección:</strong> {flatData.address}
+          <strong>Dirección:</strong> {address}
         </div>
         <div>
-          <strong>Numeración:</strong> {flatData.number}
+          <strong>Numeración:</strong> {number}
         </div>
         <div>
-          <strong>Tamaño:</strong> {flatData.size} m²
+          <strong>Tamaño:</strong> {size} m²
         </div>
         <div>
-          <strong>AC:</strong> {flatData.hasAC ? "Sí" : "No"}
+          <strong>AC:</strong> {hasAC ? "Sí" : "No"}
         </div>
         <div>
-          <strong>Año de Construcción:</strong> {flatData.yearBuilt}
+          <strong>Año de Construcción:</strong> {yearBuilt}
         </div>
         <div>
-          <strong>Valor:</strong> ${flatData.value} / mes
+          <strong>Valor:</strong> ${value} / mes
         </div>
         <div>
-          <strong>Disponible Desde:</strong> {flatData.availableFrom}
+          <strong>Disponible Desde:</strong> {formatDate(availableFrom)}
+        </div>
+        <div>
+          <strong>ID del Propietario:</strong> {userId}
         </div>
       </div>
 
