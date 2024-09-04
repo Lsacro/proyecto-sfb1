@@ -96,7 +96,7 @@ function FlatList({ showOnlyUserFlats = false }) {
         <input
           type="range"
           min="0"
-          max="10000"
+          max="1500"
           step="25"
           className="p-2 border border-gray-300 rounded"
           value={priceRange[1]}
