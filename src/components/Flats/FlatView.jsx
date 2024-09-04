@@ -106,6 +106,12 @@ const FlatView = ({ flatData, isOwner }) => {
         <h2 className="text-3xl font-bold mb-2">{title}</h2>
       </div>
 
+      <img
+        className="w-full h-64 object-cover mb-6"
+        src={`/images/Casa/${Math.floor(Math.random() * 20)}.jpg`}
+        alt={title}
+      />
+
       <p className="text-lg text-center mb-4">{description}</p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-center mb-6">
