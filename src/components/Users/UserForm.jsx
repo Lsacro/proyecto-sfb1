@@ -1,9 +1,13 @@
 import { useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { createUser } from "../../services/firebase";
+import { useNavigate } from "react-router-dom";
 
 const UserForm = ({ isUpdate = false, initialValues, onSubmit, onCancel }) => {
   console.log("UserForm received initialValues:", initialValues); // Debugging log
+
+  const navigate = useNavigate();
 
   const validationSchema = Yup.object({
     email: Yup.string()
@@ -57,11 +61,11 @@ const UserForm = ({ isUpdate = false, initialValues, onSubmit, onCancel }) => {
 
   const formik = useFormik({
     initialValues: {
-      email: initialValues?.email || "",
-      password: initialValues?.password || "",
-      firstName: initialValues?.firstName || "",
-      lastName: initialValues?.lastName || "",
-      birthDate: formatDate(initialValues?.birthDate) || "",
+      email: initialValues ? initialValues.email : "",
+      password: initialValues ? initialValues.password : "",
+      firstName: initialValues ? initialValues.firstName : "",
+      lastName: initialValues ? initialValues.lastName : "",
+      birthDate: formatDate(initialValues ? initialValues.birthDate : null),
     },
     validationSchema,
     onSubmit: (values) => {
@@ -70,7 +74,15 @@ const UserForm = ({ isUpdate = false, initialValues, onSubmit, onCancel }) => {
         ...values,
         birthDate: values.birthDate ? new Date(values.birthDate) : null,
       };
-      onSubmit(submittedValues);
+      if (isUpdate) {
+        console.log("loop en !isUpdate");
+        onSubmit(submittedValues);
+        navigate("/");
+      } else {
+        console.log("loop en isUpdate");
+        createUser(submittedValues);
+        navigate("/login");
+      }
     },
     enableReinitialize: true,
   });
