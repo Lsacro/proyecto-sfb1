@@ -1,5 +1,3 @@
-//Componente para mostrar el listado de mensajes
-
 import React, { useState, useEffect } from "react";
 import MessageForm from "./MessageForm";
 

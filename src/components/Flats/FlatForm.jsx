@@ -1,5 +1,3 @@
-//Componente para crear y editar un flat
-
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { createFlat, updateFlat } from "../../services/firebase";

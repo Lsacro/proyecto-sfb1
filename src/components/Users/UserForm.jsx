@@ -1,7 +1,6 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { createUser } from "../../services/firebase";
 
 const UserForm = ({ isUpdate = false, initialValues, onSubmit, onCancel }) => {
   console.log("UserForm received initialValues:", initialValues); // Debugging log
@@ -58,26 +57,20 @@ const UserForm = ({ isUpdate = false, initialValues, onSubmit, onCancel }) => {
 
   const formik = useFormik({
     initialValues: {
-      email: initialValues ? initialValues.email : "",
-      password: initialValues ? initialValues.password : "",
-      firstName: initialValues ? initialValues.firstName : "",
-      lastName: initialValues ? initialValues.lastName : "",
+      email: initialValues?.email || "",
+      password: initialValues?.password || "",
+      firstName: initialValues?.firstName || "",
+      lastName: initialValues?.lastName || "",
       birthDate: formatDate(initialValues?.birthDate) || "",
     },
     validationSchema,
     onSubmit: (values) => {
+      // Convertir birthDate de nuevo a Timestamp antes de enviar
       const submittedValues = {
         ...values,
         birthDate: values.birthDate ? new Date(values.birthDate) : null,
       };
-      // Convertir birthDate de nuevo a Timestamp antes de enviar
-      if (!isUpdate) {
-        console.log("Entro en loop true isUpdate");
-        createUser(submittedValues);
-      } else {
-        console.log("Entro en loop false isUpdate");
-        onSubmit(submittedValues);
-      }
+      onSubmit(submittedValues);
     },
     enableReinitialize: true,
   });

@@ -1,5 +1,4 @@
-//Componente para mostrar informacion individual de un flat
-
+import React from "react";
 import { Link } from "react-router-dom";
 import Casa from "../../images/casa.png";
 

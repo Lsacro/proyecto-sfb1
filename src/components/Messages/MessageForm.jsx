@@ -1,5 +1,3 @@
-//Componente para enviar el mensaje
-
 import { useState } from "react";
 import { getToken } from "../../services/authService";
 import { createMessage, findNameByEmail } from "../../services/firebase";

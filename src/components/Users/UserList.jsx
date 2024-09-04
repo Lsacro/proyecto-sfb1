@@ -1,5 +1,4 @@
-//Componente para listar los usuarios del sistema
-
+import React from "react";
 import { Link } from "react-router-dom";
 import { Trash2, Edit, User } from "lucide-react";
 

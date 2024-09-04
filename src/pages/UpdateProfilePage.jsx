@@ -3,8 +3,6 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../config/firebase"; // Asegúrate de que esta ruta sea correcta
 import UserForm from "../components/Users/UserForm";
-import { getToken } from "../services/authService";
-import { valdiateEmail } from "../services/firebase";
 
 function UpdateProfilePage() {
   const { id } = useParams();

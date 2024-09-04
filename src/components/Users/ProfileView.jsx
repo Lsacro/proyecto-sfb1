@@ -1,6 +1,4 @@
-//Componente para mostrar el perfil o datos del usuario
-
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { getToken } from "../../services/authService";
 import { useNavigate } from "react-router-dom";
 import logo from "../../Logo.png";
