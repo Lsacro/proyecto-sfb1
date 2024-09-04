@@ -30,9 +30,17 @@ function Navbar({ onDeleteProfile }) {
     }
   };
 
+  const handleLogoClick = () => {
+    navigate("/");
+  };
   return (
     <div className="flex flex-wrap justify-between mx-16 mt-4 items-center">
-      <img className="w-64" src={Logo} alt="Sin Flat Busque 1" />
+      <img
+        className="w-64"
+        src={Logo}
+        alt="Sin Flat Busque 1"
+        onClick={handleLogoClick}
+      />
       <div className="flex items-center">
         <span className="text-beige text-xl mr-4">Bienvenido</span>
         <div
