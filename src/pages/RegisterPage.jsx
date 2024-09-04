@@ -7,7 +7,7 @@ import UserForm from "../components/Users/UserForm";
 function RegisterPage() {
   return (
     <div>
-      <UserForm />
+      <UserForm initialValues={false} />
     </div>
   );
 }
