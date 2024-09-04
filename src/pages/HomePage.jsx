@@ -1,4 +1,3 @@
-import React from "react";
 import Navbar from "../components/Commons/Navbar";
 import FlatList from "../components/Flats/FlatList";
 

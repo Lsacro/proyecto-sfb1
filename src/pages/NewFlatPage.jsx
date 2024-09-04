@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import FlatForm from "../components/Flats/FlatForm";
 import Navbar from "../components/Commons/Navbar";

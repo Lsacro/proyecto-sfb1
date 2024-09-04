@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getFlats, getUserById } from "../services/firebase";
 import AuthContext from "../contexts/authContext";
 import Navbar from "../components/Commons/Navbar";

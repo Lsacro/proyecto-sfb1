@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getFlats } from "../../services/firebase";
 import { getToken } from "../../services/authService";
 import fondoHome from "../../images/fondoHome.png";
 import FlatItem from "./FlatItem";
+import { Link } from "react-router-dom";
 
 function FlatList({ showOnlyUserFlats = false }) {
   const [flats, setFlats] = useState([]);
@@ -12,8 +13,8 @@ function FlatList({ showOnlyUserFlats = false }) {
 
   // Estados para los filtros
   const [cityFilter, setCityFilter] = useState("");
-  const [priceRange, setPriceRange] = useState([0, 10000]);
-  const [sizeRange, setSizeRange] = useState([0, 10000]);
+  const [priceRange, setPriceRange] = useState([0, 9999]);
+  const [sizeRange, setSizeRange] = useState([0, 999]);
 
   // Estado para el orden
   const [orderBy, setOrderBy] = useState("");
@@ -96,7 +97,7 @@ function FlatList({ showOnlyUserFlats = false }) {
           type="range"
           min="0"
           max="10000"
-          step="100"
+          step="25"
           className="p-2 border border-gray-300 rounded"
           value={priceRange[1]}
           onChange={(e) => setPriceRange([0, parseInt(e.target.value, 10)])}
@@ -107,8 +108,8 @@ function FlatList({ showOnlyUserFlats = false }) {
         <input
           type="range"
           min="0"
-          max="10000"
-          step="100"
+          max="1000"
+          step="25"
           className="p-2 border border-gray-300 rounded"
           value={sizeRange[1]}
           onChange={(e) => setSizeRange([0, parseInt(e.target.value, 10)])}
@@ -126,6 +127,23 @@ function FlatList({ showOnlyUserFlats = false }) {
           <option value="priceAsc">Precio (Menor a Mayor)</option>
           <option value="sizeAsc">Tamaño (Menor a Mayor)</option>
         </select>
+        <Link to="newflat">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="64"
+            height="64"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#a15929"
+            strokeWidth="2.25"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <rect width="18" height="18" x="3" y="3" rx="2" />
+            <path d="M8 12h8" />
+            <path d="M12 8v8" />
+          </svg>
+        </Link>
       </div>
 
       <div
