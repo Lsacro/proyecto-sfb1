@@ -1,19 +1,42 @@
 //Componente para mostrar el listado de mensajes
 
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MessageForm from "./MessageForm";
 
 const MessageList = ({ flatId, userId, isOwner, existingMessages }) => {
   const [messages, setMessages] = useState(existingMessages || []);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
+  useEffect(() => {
+    setMessages(existingMessages || []);
+  }, [existingMessages]);
+
   const handleSendMessage = (newMessage) => {
     setMessages([...messages, newMessage]);
   };
 
+  // Filtramos los mensajes basados en el userId si no es el propietario
   const filteredMessages = isOwner
     ? messages
-    : messages.filter((msg) => msg.userId === userId);
+    : messages.filter((msg) => msg && msg.email === userId);
+
+  const renderMessage = (msg) => {
+    if (!msg) return null;
+
+    const { id, name, email, timestamp, content } = msg;
+    return (
+      <div key={id || Date.now()} className="border-b border-gray-300 py-2">
+        <p>
+          <strong>{name || "Usuario desconocido"}</strong> (
+          {email || "email no disponible"})
+        </p>
+        <p className="text-sm text-gray-600">
+          {timestamp || "Fecha desconocida"}
+        </p>
+        <p>{content || "Sin contenido"}</p>
+      </div>
+    );
+  };
 
   return (
     <div>
@@ -24,30 +47,21 @@ const MessageList = ({ flatId, userId, isOwner, existingMessages }) => {
         {filteredMessages.length === 0 ? (
           <p>No hay mensajes</p>
         ) : (
-          filteredMessages.map((msg) => (
-            <div key={msg.id} className="border-b border-gray-300 py-2">
-              <p>
-                <strong>{msg.name}</strong> ({msg.email})
-              </p>
-              <p className="text-sm text-gray-600">{msg.timestamp}</p>
-              <p>{msg.content}</p>
-            </div>
-          ))
+          filteredMessages.map(renderMessage)
         )}
       </div>
-      {!isOwner && (
-        <button
-          onClick={() => setIsPopupOpen(true)}
-          className="bg-beige text-white px-4 py-2 rounded-md"
-        >
-          Enviar Mensaje
-        </button>
-      )}
+      <button
+        onClick={() => setIsPopupOpen(true)}
+        className="bg-beige text-white px-4 py-2 rounded-md"
+      >
+        Enviar Mensaje
+      </button>
 
       <MessageForm
         isOpen={isPopupOpen}
         onClose={() => setIsPopupOpen(false)}
         onSubmit={handleSendMessage}
+        flatId={flatId}
       />
     </div>
   );

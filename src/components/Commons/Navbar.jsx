@@ -119,7 +119,13 @@ function Navbar({ onDeleteProfile }) {
               </button>
             </li>
             <li>
-              <span className="text-gray-400">All Users</span>
+              <Link
+                className="hover:text-beige"
+                to="/allusers"
+                onClick={() => setIsOpen(false)}
+              >
+                All Users
+              </Link>
             </li>
           </ul>
         </div>

@@ -39,10 +39,17 @@ export const getUsers = async () => {
 
 //* Vamos a definir la función de lectura de flats
 
-const getFlats = async () => {
-  const data = await getDocs(flatsCollectionRef);
-  const flats = data.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-  return flats;
+export const getFlats = async () => {
+  try {
+    const querySnapshot = await getDocs(flatsCollectionRef);
+    return querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+  } catch (error) {
+    console.error("Error getting flats: ", error);
+    throw error;
+  }
 };
 
 export const flatsArray = await getFlats();
@@ -57,7 +64,17 @@ export const createUser = async (user) => {
 //Vamos a definir la fucnión para crear un flat
 
 export const createFlat = async (flat) => {
-  await addDoc(flatsCollectionRef, flat);
+  try {
+    const docRef = await addDoc(flatsCollectionRef, flat);
+    return docRef.id; // Devuelve el ID del documento creado
+  } catch (error) {
+    console.error("Error al crear el flat: ", error);
+    throw error;
+  }
+};
+export const updateFlat = async (id, flatData) => {
+  const flatDoc = doc(db, "flats", id);
+  await updateDoc(flatDoc, flatData);
 };
 
 //Vamos a definir la función para crear un mensaje

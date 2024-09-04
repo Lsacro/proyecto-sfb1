@@ -1,5 +1,7 @@
 //Pagina para el registro del usuario
 
+//Pagina para el registro del usuario
+
 import UserForm from "../components/Users/UserForm";
 
 function RegisterPage() {

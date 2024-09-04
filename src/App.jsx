@@ -1,3 +1,4 @@
+import React from "react";
 import { Route, Routes } from "react-router-dom";
 import FavouritesPage from "./pages/FavouritesPage";
 import HomePage from "./pages/HomePage";
@@ -5,13 +6,12 @@ import MyFlatsPage from "./pages/MyFlatsPage";
 import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import UpdateProfilePage from "./pages/UpdateProfilePage";
 import PrivateRoute from "./components/Commons/PrivateRoute";
 import NewFlatPage from "./pages/NewFlatPage";
 import EditFlatPage from "./pages/EditFlatPage";
 import FlatDetailsPage from "./pages/FlatDetailsPage";
-import MessageList from "./components/Messages/MessageList";
 import AllUsersPage from "./pages/AllUsersPage";
+import EditUserPage from "./pages/UpdateProfilePage";
 
 const App = () => {
   return (
@@ -24,14 +24,11 @@ const App = () => {
           <Route path="/favourites" element={<FavouritesPage />} />
           <Route path="my-flats" element={<MyFlatsPage />} />
           <Route path="myprofile" element={<ProfilePage />} />
-          <Route path="UpdateProfilePage" element={<UpdateProfilePage />} />
           <Route path="newflat" element={<NewFlatPage />} />
-          <Route path="editflat" element={<EditFlatPage />} />
-          <Route path="flatdetails" element={<FlatDetailsPage />} />
-          <Route path="/edit-flat/:id" element={<EditFlatPage />} />
-          <Route path="flat-details/:id" element={<FlatDetailsPage />} />{" "}
-          {/* Ruta para ver detalles del flat */}
-          <Route path="allusers" element={<AllUsersPage />} />
+          <Route path="edit-flat/:id" element={<EditFlatPage />} />
+          <Route path="flat/:id" element={<FlatDetailsPage />} />
+          <Route path="/allusers" element={<AllUsersPage />} />
+          <Route path="/edit-user/:id" element={<EditUserPage />} />
         </Route>
       </Routes>
     </>

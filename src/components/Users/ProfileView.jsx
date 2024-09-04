@@ -1,21 +1,61 @@
 //Componente para mostrar el perfil o datos del usuario
 
+import React, { useState, useEffect } from "react";
 import { getToken } from "../../services/authService";
 import { useNavigate } from "react-router-dom";
 import logo from "../../Logo.png";
 import { valdiateEmail } from "../../services/firebase";
 
 const ProfileView = () => {
-  const tokenLocalStorage = getToken();
-  const userData = valdiateEmail(tokenLocalStorage);
-  const birthDate = new Date(userData.birthDate.seconds);
-  const birthDateFormatted = birthDate.toLocaleDateString("es-ES", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const tokenLocalStorage = getToken();
+        if (!tokenLocalStorage) {
+          throw new Error("No se encontró el token de autenticación");
+        }
+        const user = await valdiateEmail(tokenLocalStorage);
+        if (!user) {
+          throw new Error("No se pudo validar el usuario");
+        }
+        setUserData(user);
+      } catch (err) {
+        console.error("Error al obtener datos del usuario:", err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  if (loading) {
+    return <div>Cargando perfil...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (!userData) {
+    return <div>No se encontraron datos del usuario</div>;
+  }
+
+  const birthDate =
+    userData.birthDate && new Date(userData.birthDate.seconds * 1000);
+  const birthDateFormatted = birthDate
+    ? birthDate.toLocaleDateString("es-ES", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    : "No disponible";
 
   return (
     <div className="border border-black shadow-xl p-4 max-w-md mx-auto mt-10 bg-white rounded-lg">
@@ -41,7 +81,7 @@ const ProfileView = () => {
 
         <div className="flex justify-center mt-6">
           <button
-            onClick={() => navigate("/UpdateProfilePage")}
+            onClick={() => navigate(`/edit-user/${userData.id}`)}
             className="p-4 border-2 border-beige rounded-lg bg-beige text-white w-40"
           >
             Editar mis Datos
